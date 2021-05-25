@@ -2,10 +2,16 @@ const User = require("../../models/User");
 
 class UserRepo {
   async Create(objInputs) {
-    return await User.create({
+    try {
+      return await User.create({
         email: objInputs.email,
         hashedPassword: objInputs.password
-    })
+    });
+    } catch (err) {
+      console.error("UserRepo Error", err);
+      return null;
+    }
+    
   }
 
   Get(objInputs) {}
@@ -15,4 +21,4 @@ class UserRepo {
   Delete(objInputs) {}
 }
 
-module.exports = { UserRepo };
+module.exports = UserRepo;

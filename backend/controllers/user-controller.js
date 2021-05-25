@@ -1,20 +1,32 @@
-const userRepo = require("../repos/user-repo/user-repo");
+const UserRepo = require("../repos/user-repo/user-repo");
+const HttpError = require("../models/HttpError");
+const Encryptor = require("../services/encryptor");
+const TokenSigner = require("../services/token-signer");
+
 
 const loginUser = async (req, res, next) => {
-    console.log("login route is not implemented yet");
-}
+  console.log("login route is not implemented yet");
+};
 
 const signup = async (req, res, next) => {
-    // validate inputs  
+  // validate inputs
 
-    // send email and password out to create user
-    const {email, password} = req.body;
-    const repo = new userRepo.UserRepo();
-    const user = await repo.Create({email, password});
+  const { email, password } = req.body;
 
-    console.log(user);
-    res.status(500).json({ message: user });
-    // create a token for the user
-}
+  const encryptor = new Encryptor();
+  const hashedPassword = await encryptor.Encrypt(password);
 
-module.exports = {loginUser, signup}
+  const repo = new UserRepo();
+  const user = await repo.Create({ email, password: hashedPassword });
+
+  if (user === null) {
+    return next(new HttpError("User could not be created", 401));
+  }
+
+  const tokenSigner = new TokenSigner();
+  const token = tokenSigner.Sign({id: user.id}, "1h");
+  
+  return res.status(201).json({ user, token, message: "Signup was successful" });
+};
+
+module.exports = { loginUser, signup };
