@@ -1,22 +1,18 @@
-
-
+const User = require("../../models/User");
 
 class UserRepo {
-    Create(objInputs) {
+  async Create(objInputs) {
+    return await User.create({
+        email: objInputs.email,
+        hashedPassword: objInputs.password
+    })
+  }
 
-    }
+  Get(objInputs) {}
 
-    Get(objInputs) {
+  Update(objInputs) {}
 
-    }
-
-    Update(objInputs) {
-
-    }
-
-    Delete(objInputs) {
-
-    }
+  Delete(objInputs) {}
 }
 
-module.exports = {UserRepo}
+module.exports = { UserRepo };
