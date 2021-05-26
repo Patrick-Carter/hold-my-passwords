@@ -1,6 +1,18 @@
 const User = require("../../models/User");
 const Encryptor = require("../../services/encryptor");
 
+/*
+  All endpoints that do not return a truthy value 
+  will return true if the operation was successful
+  and false otherwise.
+  
+  CREATE and GET
+  return: truthy, or falsy.
+
+  UPDATE and DELETE
+  return: true, or false.
+*/
+
 class UserRepo {
   async Create(objInputs) {
     try {
@@ -49,6 +61,9 @@ class UserRepo {
       }
 
       if (objInputs.password) {
+
+        // make sure all user passwords are hashed before 
+        // pushing to the database
         const encryptor = new Encryptor();
         const hashedPassword = await encryptor.Encrypt(objInputs.password);
 
@@ -61,13 +76,28 @@ class UserRepo {
           }
         );
       }
+
+      return true;
     } catch (err) {
       console.error("UserRepo Update Error: ", err);
-      return null;
+      return false;
     }
   }
 
-  async Delete(objInputs) {}
+  async Delete(objInputs) {
+    try {
+      await User.destroy({
+        where: {
+          id: objInputs.id,
+        },
+      });
+
+      return true;
+    } catch (err) {
+      console.error("UserRepo Delete Error: ", err);
+      return false;
+    }
+  }
 }
 
 module.exports = UserRepo;

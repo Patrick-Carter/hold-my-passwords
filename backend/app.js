@@ -14,7 +14,12 @@ const server = express();
 
 // Make sure the dbContext has properly setup
 globalContextSqlite.testConnection();
-globalContextSqlite.getSequelize().sync({force: true});
+
+/* 
+  remove this comment and the sync command 
+  when migrations are implemented for prod
+*/
+globalContextSqlite.getSequelize().sync({ force: true });
 
 server.use(
   cors({
