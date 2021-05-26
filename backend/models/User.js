@@ -1,7 +1,6 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 
-const {dbContext} = require("../data/db-context-sqlite");
-const db = new dbContext();
+const {globalContextSqlite} = require("../data/db-context-sqlite");
 
 class User extends Model {}
 
@@ -29,10 +28,10 @@ User.init(
     },
   },
   {
-    sequelize: db.getSequelize(),
+    sequelize: globalContextSqlite.getSequelize(),
     modelName: "User",
   }
 );
 
-db.getSequelize().sync({force: true});
+//db.getSequelize().sync({force: true});
 module.exports = User;

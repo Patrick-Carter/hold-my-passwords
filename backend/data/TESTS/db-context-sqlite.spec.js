@@ -1,15 +1,15 @@
-const dbContext = require("../db-context-sqlite");
+const { globalContextSqlite } = require("../db-context-sqlite");
 
 describe("testing db context", () => {
   // setup
-  const db = new dbContext.dbContext();
- 
+  //const db = new dbContext();
+
   test("dbContext should be initialized", () => {
-    expect(db).toBeTruthy();
+    expect(globalContextSqlite).toBeTruthy();
   });
 
   test("dbContext should be authed", async () => {
-    const status = await db.testConnection();
+    const status = await globalContextSqlite.testConnection();
     expect(status).toBe(true);
   });
 

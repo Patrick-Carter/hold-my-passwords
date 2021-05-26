@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const Encryptor = require("../../services/encryptor");
 
 class UserRepo {
   async Create(objInputs) {
@@ -15,18 +16,56 @@ class UserRepo {
 
   async Get(objInputs) {
     try {
-      return await User.findOne({
-        where: {
-          id: objInputs.id ?? objInputs.email,
-        },
-      });
+      if (objInputs.id) {
+        return await User.findOne({
+          where: {
+            id: objInputs.id,
+          },
+        });
+      } else {
+        return await User.findOne({
+          where: {
+            email: objInputs.email,
+          },
+        });
+      }
     } catch (err) {
       console.error("UserRepo Get Error", err);
       return null;
     }
   }
 
-  async Update(objInputs) {}
+  async Update(objInputs) {
+    try {
+      if (objInputs.email) {
+        await User.update(
+          { email: objInputs.email },
+          {
+            where: {
+              id: objInputs.id,
+            },
+          }
+        );
+      }
+
+      if (objInputs.password) {
+        const encryptor = new Encryptor();
+        const hashedPassword = await encryptor.Encrypt(objInputs.password);
+
+        await User.update(
+          { hashedPassword: hashedPassword },
+          {
+            where: {
+              id: objInputs.id,
+            },
+          }
+        );
+      }
+    } catch (err) {
+      console.error("UserRepo Update Error: ", err);
+      return null;
+    }
+  }
 
   async Delete(objInputs) {}
 }
