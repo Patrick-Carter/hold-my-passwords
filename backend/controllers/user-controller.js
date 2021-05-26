@@ -5,7 +5,12 @@ const TokenSigner = require("../services/token-signer");
 
 
 const loginUser = async (req, res, next) => {
-  console.log("login route is not implemented yet");
+  // validate inputs
+
+  const {email, password} = req.body;
+
+  
+
 };
 
 const signup = async (req, res, next) => {

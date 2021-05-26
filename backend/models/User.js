@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes, Model } = require("sequelize");
 
-const dbConnector = require("../data/db-context-sqlite");
-const db = new dbConnector.dbContext();
+const {dbContext} = require("../data/db-context-sqlite");
+const db = new dbContext();
 
 class User extends Model {}
 

@@ -5,20 +5,30 @@ class UserRepo {
     try {
       return await User.create({
         email: objInputs.email,
-        hashedPassword: objInputs.password
-    });
+        hashedPassword: objInputs.password,
+      });
     } catch (err) {
       console.error("UserRepo Error", err);
       return null;
     }
-    
   }
 
-  Get(objInputs) {}
+  async Get(objInputs) {
+    try {
+      return await User.findOne({
+        where: {
+          id: objInputs.id ?? objInputs.email,
+        },
+      });
+    } catch (err) {
+      console.error("UserRepo Get Error", err);
+      return null;
+    }
+  }
 
-  Update(objInputs) {}
+  async Update(objInputs) {}
 
-  Delete(objInputs) {}
+  async Delete(objInputs) {}
 }
 
 module.exports = UserRepo;

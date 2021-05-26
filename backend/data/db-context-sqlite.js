@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 
+
 class dbContext {
   constructor() {
     this.sequelize = new Sequelize(`sqlite::memory:`);
