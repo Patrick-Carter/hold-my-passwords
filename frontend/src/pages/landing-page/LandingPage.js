@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import postSignup from "./handlers/post-signup";
 import "./landing-page.css";
 
 const LandingPage = () => {
@@ -15,6 +16,15 @@ const LandingPage = () => {
     );
   };
 
+  const handlePost = async () => {
+    const res = await postSignup("http://localhost:5000/api/v1/user/signup", {
+      email: "testing@test.com",
+      password: "Testpassword123",
+    });
+
+    console.log(res);
+  };
+
   return (
     <header className="header_container">
       <div className="card_container">
@@ -23,16 +33,22 @@ const LandingPage = () => {
         <input type="email" id="emailInput" />
 
         <label htmlFor="passwordInput">Password:</label>
-        <input type="password" id="passwordInput" role="passwordInput" alt="password input" />
-        
+        <input type="password" id="passwordInput" alt="Password Input" />
+
         {headerText === "Sign-up!" && (
           <>
             <label htmlFor="passwordConfirmInput">Confirm Password:</label>
-            <input type="password" id="passwordConfirmInput" role="passwordInput" />
+            <input
+              type="password"
+              id="passwordConfirmInput"
+              alt="Confirm Password Input"
+            />
           </>
         )}
 
-        <button className="card_button">Submit</button>
+        <button onClick={handlePost} className="card_button">
+          Submit
+        </button>
         <button className="card_button_underlined" onClick={handleAuthType}>
           {headerButtonText}
         </button>
