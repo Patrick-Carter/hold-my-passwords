@@ -21,12 +21,14 @@ const LandingPage = () => {
         <h1 className="card_title">{headerText}</h1>
         <label htmlFor="emailInput">Email:</label>
         <input type="email" id="emailInput" />
+
         <label htmlFor="passwordInput">Password:</label>
-        <input type="password" id="passwordInput" />
+        <input type="password" id="passwordInput" role="passwordInput" alt="password input" />
+        
         {headerText === "Sign-up!" && (
           <>
             <label htmlFor="passwordConfirmInput">Confirm Password:</label>
-            <input type="password" id="passwordConfirmInput" />
+            <input type="password" id="passwordConfirmInput" role="passwordInput" />
           </>
         )}
 

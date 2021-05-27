@@ -14,7 +14,7 @@ describe("Tests for LandingPage", () => {
     render(<LandingPage />);
     const headerText = screen.getByRole("heading", { name: "Sign-up!" });
     const button = screen.getByRole("button", { name: "Switch To Login" });
-    const passwordConfirmInput = screen.getByRole("textbox", {
+    const passwordConfirmInput = screen.getByRole("passwordInput", {
       name: "Confirm Password:",
     });
 
@@ -25,14 +25,14 @@ describe("Tests for LandingPage", () => {
     expect(passwordConfirmInput).not.toBeInTheDocument();
   });
 
-  test("should have a button that submits a signup request", async () => {
-    render(<LandingPage />);
+  // test("should have a button that submits a signup request", async () => {
+  //   render(<LandingPage />);
 
-    const submitButton = screen.getByRole("button", { name: "Submit" });
+  //   const submitButton = screen.getByRole("button", { name: "Submit" });
 
-    fireEvent(submitButton);
+  //   fireEvent(submitButton);
 
-  });
+  // });
 
   test("should have labels and inputs for email and password", () => {
     render(<LandingPage />);
@@ -41,10 +41,10 @@ describe("Tests for LandingPage", () => {
     const emailInput = screen.getByRole("textbox", { name: "Email:" });
 
     const passwordLabel = screen.getByLabelText("Password:");
-    const passwordInput = screen.getByRole("textbox", { name: "Password:" });
+    const passwordInput = screen.getByRole("passwordInput", { name: "Password:" });
 
     const passwordConfirmLabel = screen.getByLabelText("Confirm Password:");
-    const passwordConfirmInput = screen.getByRole("textbox", {
+    const passwordConfirmInput = screen.getByRole("passwordInput", {
       name: "Confirm Password:",
     });
   });
