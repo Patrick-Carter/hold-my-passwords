@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,11 +5,17 @@ import {
   Switch,
 } from "react-router-dom";
 
+import LandingPage from "./pages/landing-page/LandingPage";
+
+import "./app.css";
+
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/"></Route>
+        <Route path="/">
+          <LandingPage />
+        </Route>
         <Redirect to="/" />
       </Switch>
     </Router>
