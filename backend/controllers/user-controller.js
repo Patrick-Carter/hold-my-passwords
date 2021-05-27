@@ -35,7 +35,9 @@ const loginUser = async (req, res, next) => {
     const tokenSigner = new TokenSigner();
     const token = tokenSigner.Sign({ id: user.dataValues.id }, "1h");
 
-    return res.status(200).json({ token, message: "Login was successful" });
+    return res
+      .status(200)
+      .json({ id: user.dataValues.id, token, message: "Login was successful" });
   } catch (err) {
     console.error("LOGIN ERROR: ", err);
   }
@@ -66,7 +68,11 @@ const signup = async (req, res, next) => {
 
     return res
       .status(201)
-      .json({ user, token, message: "Signup was successful" });
+      .json({
+        id: user.dataValues.id,
+        token,
+        message: "Signup was successful",
+      });
   } catch (err) {
     console.error("SIGNUP ERROR: ", err);
   }

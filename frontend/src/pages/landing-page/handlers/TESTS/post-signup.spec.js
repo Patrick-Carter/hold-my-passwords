@@ -6,7 +6,11 @@ describe("Testing all signup possibilities", () => {
 
     const responce = await postSignup(
       "http://localhost:3030/api/v1/user/signup",
-      { email: "testboi@test.com", password: "Testpassword123" }
+      {
+        email: "testboi@test.com",
+        password: "Testpassword123",
+        confirmPassword: "Testpassword123",
+      }
     );
 
     expect(responce).toBeTruthy();
