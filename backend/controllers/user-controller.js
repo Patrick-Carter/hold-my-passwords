@@ -44,14 +44,14 @@ const loginUser = async (req, res, next) => {
 };
 
 const signup = async (req, res, next) => {
+  const { email, password, confirmPassword } = req.body;
+
   try {
     const validationErrors = validationResult(req);
 
-    if (!validationErrors.isEmpty()) {
-      next(new HttpError("Invalid inputs passed", 422));
+    if (!validationErrors.isEmpty() || password !== confirmPassword) {
+      return next(new HttpError("Invalid inputs passed", 422));
     }
-
-    const { email, password } = req.body;
 
     const encryptor = new Encryptor();
     const hashedPassword = await encryptor.Encrypt(password);
@@ -66,13 +66,11 @@ const signup = async (req, res, next) => {
     const tokenSigner = new TokenSigner();
     const token = tokenSigner.Sign({ id: user.dataValues.id }, "1h");
 
-    return res
-      .status(201)
-      .json({
-        id: user.dataValues.id,
-        token,
-        message: "Signup was successful",
-      });
+    return res.status(201).json({
+      id: user.dataValues.id,
+      token,
+      message: "Signup was successful",
+    });
   } catch (err) {
     console.error("SIGNUP ERROR: ", err);
   }

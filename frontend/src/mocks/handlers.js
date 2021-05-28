@@ -11,4 +11,23 @@ export const handlers = [
       })
     );
   }),
+  rest.post("http://localhost:3030/api/v1/user/login", (req, res, ctx) => {
+    const { email, password } = req.body;
+
+    if (email === "testboi@test.com" && password === "Testpassword123") {
+      return res(
+        ctx.json({
+          id: "fakeUserId",
+          token: "fakeToken",
+          message: "Login was successful",
+        })
+      );
+    } else {
+      return res(
+        ctx.json({
+          message: "invalid credentials",
+        })
+      );
+    }
+  }),
 ];

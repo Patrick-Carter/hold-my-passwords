@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import postSignup from "./handlers/post-signup";
+import postLogin from "./handlers/post-login";
 import "./landing-page.css";
 
 const LandingPage = () => {
@@ -21,11 +22,20 @@ const LandingPage = () => {
     );
   };
 
-  const handlePost = async () => {
+  const handleSignup = async () => {
     const res = await postSignup("http://localhost:5000/api/v1/user/signup", {
       email: inputValues.email,
       password: inputValues.password,
       confirmPassword: inputValues.confirmPassword,
+    });
+
+    console.log(res);
+  };
+
+  const handleLogin = async () => {
+    const res = await postLogin("http://localhost:5000/api/v1/user/login", {
+      email: inputValues.email,
+      password: inputValues.password,
     });
 
     console.log(res);
@@ -80,7 +90,10 @@ const LandingPage = () => {
           </>
         )}
 
-        <button onClick={handlePost} className="card_button">
+        <button
+          onClick={headerText === "Sign-up!" ? handleSignup : handleLogin}
+          className="card_button"
+        >
           Submit
         </button>
         <button className="card_button_underlined" onClick={handleAuthType}>
