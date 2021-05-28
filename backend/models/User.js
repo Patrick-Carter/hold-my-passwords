@@ -33,5 +33,4 @@ User.init(
   }
 );
 
-//db.getSequelize().sync({force: true});
 module.exports = User;
