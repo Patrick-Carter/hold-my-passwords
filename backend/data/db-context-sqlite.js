@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 
-class dbContextSqlite {
+class DbContextSqlite {
   constructor() {
     this.sequelize = new Sequelize(`sqlite::memory:`);
   }
@@ -28,6 +28,6 @@ class dbContextSqlite {
   }
 }
 
-const globalContextSqlite = new dbContextSqlite();
+const globalContextSqlite = new DbContextSqlite();
 
 module.exports = { globalContextSqlite };

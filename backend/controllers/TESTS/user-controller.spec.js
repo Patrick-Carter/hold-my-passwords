@@ -13,16 +13,13 @@ describe("testing user-controller", () => {
 
   test("should return a new user", async () => {
     expect.assertions(3);
-    const newUser = await UserController.signupMock(
-      {
-        body: {
-          email: "testingUserController@test.com",
-          password: "thisisatest1234",
-          confirmPassword: "thisisatest1234",
-        },
+    const newUser = await UserController.signupMock({
+      body: {
+        email: "testingUserController@test.com",
+        password: "thisisatest1234",
+        confirmPassword: "thisisatest1234",
       },
-      {}
-    );
+    });
 
     expect(newUser.id).toBeTruthy();
     expect(newUser.token).toBeTruthy();
@@ -32,16 +29,13 @@ describe("testing user-controller", () => {
   test("should return a error because passwords do not match", async () => {
     expect.assertions(1);
 
-    const res = await UserController.signupMock(
-      {
-        body: {
-          email: "testingUserController@test.com",
-          password: "thisisatest1234",
-          confirmPassword: "DIFFERENT",
-        },
+    await UserController.signupMock({
+      body: {
+        email: "testingUserController@test.com",
+        password: "thisisatest1234",
+        confirmPassword: "DIFFERENT",
       },
-      {}
-    );
+    });
 
     expect(console.error).toHaveBeenCalledTimes(1);
   });
@@ -67,7 +61,7 @@ describe("testing user-controller", () => {
   test("should be an invalid user", async () => {
     expect.assertions(1);
 
-    const loggedInUser = await UserController.loginUserMock(
+    await UserController.loginUserMock(
       {
         body: {
           email: "testingUserController@test.com",

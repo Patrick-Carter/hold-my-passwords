@@ -2,11 +2,19 @@ const bcrypt = require("bcrypt");
 
 class Encryptor {
   async Encrypt(string) {
-    return await bcrypt.hash(string, 12);
+    try {
+      return await bcrypt.hash(string, 12);
+    } catch (err) {
+      console.error("ENCRYPTOR ERROR: ", err);
+    }
   }
 
   async Decrypt(string, encryptedString) {
-    return await bcrypt.compare(string, encryptedString);
+    try {
+      return await bcrypt.compare(string, encryptedString);
+    } catch (err) {
+      console.error("ENCRYPTOR ERROR: ", err);
+    }
   }
 }
 

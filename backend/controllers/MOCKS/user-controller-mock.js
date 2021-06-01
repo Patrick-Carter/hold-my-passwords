@@ -5,7 +5,7 @@ const HttpError = require("../../models/HttpError");
 const Encryptor = require("../../services/encryptor");
 const TokenSigner = require("../../services/token-signer");
 
-const loginUserMock = async (req, res) => {
+const loginUserMock = async (req) => {
   try {
     const validationErrors = validationResult(req);
 
@@ -19,7 +19,7 @@ const loginUserMock = async (req, res) => {
     const user = await repo.Get({ email: email });
 
     if (user === null) {
-      throw new HttpError("invalid credentials", 422)
+      throw new HttpError("invalid credentials", 422);
     }
 
     const encryptor = new Encryptor();
@@ -29,30 +29,30 @@ const loginUserMock = async (req, res) => {
     );
 
     if (!isValidPassword) {
-      throw new HttpError("invalid credentials", 422)
+      throw new HttpError("invalid credentials", 422);
     }
 
     const tokenSigner = new TokenSigner();
     const token = tokenSigner.Sign({ id: user.dataValues.id }, "1h");
 
-    return (res = {
+    return {
       id: user.dataValues.id,
       token,
       message: "Login was successful",
-    });
+    };
   } catch (err) {
     console.error("LOGIN ERROR: ", err);
   }
 };
 
-const signupMock = async (req, res) => {
+const signupMock = async (req) => {
   const { email, password, confirmPassword } = req.body;
 
   try {
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty() || password !== confirmPassword) {
-      throw new HttpError("Invalid inputs passed", 422)
+      throw new HttpError("Invalid inputs passed", 422);
     }
 
     const encryptor = new Encryptor();
@@ -62,17 +62,17 @@ const signupMock = async (req, res) => {
     const user = await repo.Create({ email, password: hashedPassword });
 
     if (user === null) {
-      throw new HttpError("User could not be created", 401)
+      throw new HttpError("User could not be created", 401);
     }
 
     const tokenSigner = new TokenSigner();
     const token = tokenSigner.Sign({ id: user.dataValues.id }, "1h");
 
-    return (res = {
+    return {
       id: user.dataValues.id,
       token,
       message: "Signup was successful",
-    });
+    };
   } catch (err) {
     console.error("SIGNUP ERROR: ", err);
   }
