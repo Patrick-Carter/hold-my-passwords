@@ -10,7 +10,6 @@ const userRoutes = require("./routes/user-routes");
 
 // creating needed objects
 const server = express();
-//const db = new dbContext();
 
 // Make sure the dbContext has properly setup
 globalContextSqlite.testConnection();
